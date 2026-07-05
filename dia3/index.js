@@ -1,6 +1,7 @@
 const logger = require('node-color-log');
 const prompt = require('prompt-sync')();
-
+const AsciiArt = require("image-and-video-to-ascii");
+const path = require("path");
 
 // Ejercicio 1-1
 logger.color('white').bgColor('blue').log('        Ejercicio 1-1        ');
@@ -139,3 +140,31 @@ figlet('Hola!', (err, data) => {
   console.log(data);
 });
 
+const file = process.argv[2];
+
+if (!file) {
+  console.log("Debes indicar un archivo.");
+  console.log("   node index.js Smaev.png");
+  process.exit();
+}
+
+const fullPath = path.resolve(file);
+
+const options = {
+  colored: true,
+  size: {
+    height: 40
+  }
+};
+
+const isVideo = /\.(mp4|avi|mov|webm|mkv)$/i.test(file);
+
+if (isVideo) {
+  console.log(" Convirtiendo video...");
+  AsciiArt.video(fullPath, options);
+} else {
+  console.log("Convirtiendo imagen...");
+  AsciiArt.getImageAscii(fullPath, options)
+    .then(result => console.log(result))
+    .catch(err => console.error("Error:", err));
+}
