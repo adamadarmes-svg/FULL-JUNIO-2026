@@ -1,0 +1,10 @@
+{
+  "app": {
+    "nombre": "dia13",
+    "puerto": 3000
+  },
+  "db": {
+    "url": "mongodb://localhost:27017/dia13"
+  },
+  "secretKey": "default_secret"
+}

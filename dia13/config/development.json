@@ -1,0 +1,9 @@
+{
+  "app": {
+    "puerto": 3000
+  },
+  "db": {
+    "url": "mongodb://localhost:27017/dia13_dev"
+  },
+  "secretKey": "dev_secret_123"
+}
