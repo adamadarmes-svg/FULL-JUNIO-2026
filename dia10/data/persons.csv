@@ -1,0 +1,4 @@
+id,name,surname,isTeacher,birthdate
+1,Carlos,Ruiz,true,1980-03-15
+2,Lucía,Martínez,false,2005-07-20
+3,Pedro,Sánchez,false,2006-01-10
