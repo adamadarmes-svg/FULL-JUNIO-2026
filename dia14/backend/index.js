@@ -16,6 +16,12 @@ const taskRoutes = require('./routes/task.routes')
 app.use('/items', itemRoutes)
 app.use('/auth', authRoutes)
 app.use('/tasks', taskRoutes)
+app.use(cors({
+  origin: [
+    'http://localhost:5173',            
+    'https://full-junio-2026-4etq.vercel.app/'  
+  ]
+}))
 
 const dns = require("dns");
 dns.setServers(["1.1.1.1", "8.8.8.8"]); 
