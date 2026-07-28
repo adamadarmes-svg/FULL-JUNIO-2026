@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const API = 'http://localhost:5000/auth'
+const API = `${import.meta.env.VITE_API_URL}/auth`
 
 function Status({ refresh }) {
     const [estado, setEstado] = useState(null) 

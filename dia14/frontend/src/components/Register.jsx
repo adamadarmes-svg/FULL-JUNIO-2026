@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-const API = 'http://localhost:5000/auth'
+const API = `${import.meta.env.VITE_API_URL}/auth`
 
 function Register() {
     const [email, setEmail] = useState('')

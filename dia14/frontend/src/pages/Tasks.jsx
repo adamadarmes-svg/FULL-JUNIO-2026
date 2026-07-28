@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const API = 'http://localhost:5000/tasks'
+const API = `${import.meta.env.VITE_API_URL}/tasks`
 
 function Tasks() {
   const [tasks, setTasks] = useState([])

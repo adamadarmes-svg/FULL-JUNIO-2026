@@ -17,9 +17,12 @@ app.use('/items', itemRoutes)
 app.use('/auth', authRoutes)
 app.use('/tasks', taskRoutes)
 
+const dns = require("dns");
+dns.setServers(["1.1.1.1", "8.8.8.8"]); 
+
 mongoose.connect(process.env.MONGO_URL)
   .then(() => {
-    console.log('Conectado a MongoDB')
-    app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`))
+    console.log('Conectado a MongoDB');
+    app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
   })
-  .catch(err => console.error('Error MongoDB:', err))
+  .catch(err => console.error('Error MongoDB:', err));
