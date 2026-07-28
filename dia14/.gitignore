@@ -67,8 +67,7 @@ web_modules/
 
 # dotenv environment variable files
 .env
-.env.*
-!.env.example
+.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -157,4 +156,3 @@ package-lock.json
 
 node_modules/
 .env.development
-.env.production
