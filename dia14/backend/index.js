@@ -8,7 +8,7 @@ const app = express()
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://full-junio-2026-4etq.vercel.app'  
+    'https://full-junio-2026-s1ev.vercel.app'
   ]
 }))
 app.use(express.json())
