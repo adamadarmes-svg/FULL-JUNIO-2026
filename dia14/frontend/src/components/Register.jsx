@@ -19,7 +19,9 @@ function Register() {
             setMensaje('Login exitoso')
             window.location.href = '/tasks'  
         } catch (err) {
-            setMensaje(err.response?.data?.error || 'Error al registrar')
+            const errData = err.response?.data?.error
+            const texto = typeof errData === 'string' ? errData : errData?.message || 'Error al registrar'
+            setMensaje(texto)
         }
     }
 
