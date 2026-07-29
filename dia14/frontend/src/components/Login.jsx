@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const API = `${import.meta.env.VITE_API_URL}/auth`
@@ -7,6 +8,7 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [mensaje, setMensaje] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -17,7 +19,8 @@ function Login() {
             localStorage.setItem('token', token)
 
             setMensaje('Login exitoso')
-            window.location.href = '/tasks'  
+            window.location.href = '/tasks' 
+            navigate('/tasks') 
         } catch (err) {
             const errData = err.response?.data?.error
             const texto = typeof errData === 'string' ? errData : errData?.message || 'Error al iniciar sesión'
