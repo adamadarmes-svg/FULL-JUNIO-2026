@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #0a0a0a;
+  --color-paper: #ffffff;
+  --color-gold: #b8964f;
+}
+
+html {
+  background-color: var(--color-paper);
+}
+
+body {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--color-ink);
+}
