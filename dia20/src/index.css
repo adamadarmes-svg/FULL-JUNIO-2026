@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&display=swap');
+
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--color-linen);
+  background-image: radial-gradient(circle at 15% 0%, rgba(166, 129, 63, 0.05), transparent 45%);
+}
+
+input[type="range"] {
+  accent-color: var(--color-ink);
+}
+
+::selection {
+  background-color: var(--color-brass);
+  color: var(--color-paper);
+}
