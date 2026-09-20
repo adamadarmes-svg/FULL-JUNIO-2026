@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  --oro: #c9a227;
+  --rojo: #b3121c;
+  --negro: #111111;
+  --blanco: #ffffff;
+}
+
+body {
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--negro);
+  border-left: 4px solid var(--accent, var(--negro));
+  box-shadow: 4px 4px 0 var(--negro);
+  padding: 1.25rem;
+}
+
+.btn {
+  background: var(--negro);
+  color: var(--blanco);
+  border: 1px solid var(--negro);
+  padding: 0.5rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn:hover {
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+.btn-oro {
+  background: var(--oro);
+  border-color: var(--oro);
+  color: var(--negro);
+}
+.btn-oro:hover {
+  background: var(--blanco);
+  color: var(--oro);
+}
+
+.btn-rojo {
+  background: var(--rojo);
+  border-color: var(--rojo);
+  color: var(--blanco);
+}
+.btn-rojo:hover {
+  background: var(--blanco);
+  color: var(--rojo);
+}
+
+.input {
+  background: var(--blanco);
+  color: var(--negro);
+  border: 1px solid var(--negro);
+  padding: 0.5rem 0.75rem;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--oro);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-weight: 700;
+  color: var(--blanco);
+  background: var(--accent, var(--negro));
+  flex-shrink: 0;
+}
+
+.txt-oro { color: var(--oro); }
+.txt-rojo { color: var(--rojo); }
+
+.nivel-oro { --accent: var(--oro); }
+.nivel-rojo { --accent: var(--rojo); }
+.nivel-negro { --accent: var(--negro); }
+.nivel-mix { --accent: var(--rojo); }
+
+.badge-mix {
+  background: linear-gradient(135deg, var(--oro) 50%, var(--rojo) 50%);
+}

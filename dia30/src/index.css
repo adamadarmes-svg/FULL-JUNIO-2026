@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --c-bg: #ececea;
+  --c-surface: #ffffff;
+  --c-sunken: #f5f5f3;
+  --c-ink: #111111;
+  --c-mute: #6b6b68;
+  --c-line: #d2d2ce;
+  --c-ok: #15803d;
+  --c-danger: #b91c1c;
+}
+
+[data-theme="dark"] {
+  --c-bg: #0c0c0c;
+  --c-surface: #161616;
+  --c-sunken: #1f1f1f;
+  --c-ink: #f2f2f0;
+  --c-mute: #8c8c88;
+  --c-line: #2e2e2e;
+  --c-ok: #4ade80;
+  --c-danger: #f87171;
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-sunken: var(--c-sunken);
+  --color-ink: var(--c-ink);
+  --color-mute: var(--c-mute);
+  --color-line: var(--c-line);
+  --color-ok: var(--c-ok);
+  --color-danger: var(--c-danger);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-ink);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .card {
+    @apply flex h-full flex-col border border-line bg-surface p-5 transition-colors duration-300;
+  }
+
+  .card-tag {
+    @apply mb-5 flex items-center justify-between gap-2 text-[10px] font-semibold uppercase tracking-widest text-mute;
+  }
+
+  .tile {
+    @apply grid shrink-0 place-items-center border border-line bg-sunken;
+  }
+
+  .btn-solid {
+    @apply inline-flex h-9 cursor-pointer select-none items-center justify-center border border-ink bg-ink px-4 text-xs font-semibold uppercase tracking-wider text-surface transition-opacity hover:opacity-80;
+  }
+  .btn-line {
+    @apply inline-flex h-9 cursor-pointer select-none items-center justify-center border border-line bg-transparent px-4 text-xs font-semibold uppercase tracking-wider text-ink transition-colors hover:border-ink;
+  }
+  .btn-icon {
+    @apply grid size-7 cursor-pointer place-items-center border border-line text-sm font-semibold transition-colors hover:border-ink;
+  }
+  .btn-icon-danger {
+    @apply grid size-7 cursor-pointer place-items-center border border-line text-sm font-semibold text-danger transition-colors hover:border-danger;
+  }
+
+  .badge {
+    @apply inline-block border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider;
+  }
+}

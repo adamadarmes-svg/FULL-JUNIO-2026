@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeDown {
+  animation: fadeDown 0.2s ease-out forwards;
+}
+
+.swiper-pagination-bullet {
+  border-radius: 0;
+}
