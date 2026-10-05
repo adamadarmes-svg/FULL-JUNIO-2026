@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+::selection {
+  background: #171717;
+  color: #fff;
+}
+
+* {
+  border-radius: 0;
+  box-shadow: none;
+}

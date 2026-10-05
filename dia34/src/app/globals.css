@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-900 antialiased;
+  }
+
+  ::selection {
+    @apply bg-stone-900 text-white;
+  }
+}
+
+/* Etiqueta pequeña en mayúsculas para encabezados de sección */
+@utility eyebrow {
+  @apply text-[11px] font-medium uppercase tracking-[0.18em] text-stone-400;
+}
+
+/* Botones rectos */
+@utility btn {
+  @apply inline-flex items-center gap-2 border px-5 py-2.5 text-sm font-medium transition-colors cursor-pointer;
+}
+
+@utility btn-primary {
+  @apply btn border-stone-900 bg-stone-900 text-white hover:border-stone-700 hover:bg-stone-700;
+}
+
+@utility btn-outline {
+  @apply btn border-stone-300 bg-white text-stone-700 hover:border-stone-900 hover:text-stone-900;
+}
+
+/* Contenedor blanco con borde fino */
+@utility panel {
+  @apply border border-stone-200 bg-white;
+}
