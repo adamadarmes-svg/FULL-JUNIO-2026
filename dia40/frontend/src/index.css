@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --color-oro: #a8875a;
+}
+
+body {
+  @apply bg-stone-50 text-stone-900 antialiased;
+}

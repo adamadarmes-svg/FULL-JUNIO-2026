@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sala</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fondo: #fafaf9;
+      --panel: #ffffff;
+      --linea: #e7e5e4;
+      --texto: #1c1917;
+      --suave: #78716c;
+      --tenue: #a8a29e;
+      --oro: #a8875a;
+      --verde: #059669;
+      --ambar: #d97706;
+      --rojo: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 14px;
+      background: var(--fondo);
+      color: var(--texto);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input {
+      font: inherit;
+      color: inherit;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+
+    .titulo {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 300;
+    }
+
+    .etiqueta {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--suave);
+    }
+
+    .campo {
+      flex: 1;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--linea);
+      background: transparent;
+      padding: 10px 0;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .campo:focus {
+      border-color: var(--texto);
+    }
+
+    .campo::placeholder {
+      color: var(--tenue);
+    }
+
+    .boton {
+      border: none;
+      background: var(--texto);
+      color: var(--fondo);
+      padding: 12px 22px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .boton:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .entrada {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
+
+    .tarjeta {
+      width: 100%;
+      max-width: 360px;
+      background: var(--panel);
+      border: 1px solid var(--linea);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .tarjeta .titulo {
+      font-size: 48px;
+      line-height: 1;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--linea);
+    }
+
+    .error {
+      min-height: 1.2em;
+      font-size: 12px;
+      color: var(--rojo);
+    }
+
+    .app {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+    }
+
+    .cabecera {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--linea);
+    }
+
+    .cabecera .titulo {
+      font-size: 30px;
+    }
+
+    .cabecera .yo {
+      margin-left: auto;
+      color: var(--suave);
+    }
+
+    .estado::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 8px;
+      background: var(--rojo);
+    }
+
+    .estado.conectado::before {
+      background: var(--verde);
+    }
+
+    .estado.conectando::before {
+      background: var(--ambar);
+    }
+
+    .mensajes {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mensaje {
+      margin-top: 20px;
+      padding-left: 16px;
+      border-left: 1px solid var(--linea);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      line-height: 1.6;
+      color: #44403c;
+    }
+
+    .mensaje.propio {
+      border-color: var(--oro);
+    }
+
+    .mensaje .meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 4px;
+      color: var(--texto);
+    }
+
+    .mensaje .hora {
+      color: var(--tenue);
+      letter-spacing: 0;
+    }
+
+    .aviso {
+      margin: 16px 0;
+      text-align: center;
+      color: var(--tenue);
+    }
+
+    .aviso.fallo {
+      color: var(--rojo);
+    }
+
+    .vacio {
+      margin: auto;
+      font-size: 30px;
+      color: #d6d3d1;
+    }
+
+    .formulario {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      padding: 16px 32px;
+      border-top: 1px solid var(--linea);
+    }
+
+    @media (max-width: 600px) {
+      .cabecera, .mensajes, .formulario {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .cabecera .yo {
+        display: none;
+      }
+
+      .tarjeta {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section id="pantallaEntrada" class="entrada">
+    <form id="formEntrada" class="tarjeta" autocomplete="off">
+      <div>
+        <p class="etiqueta" style="color: var(--oro)">Chat</p>
+        <h1 class="titulo">Sala</h1>
+      </div>
+      <input id="inputNombre" class="campo" type="text" placeholder="Nombre" maxlength="20" autofocus>
+      <span id="errorEntrada" class="error"></span>
+      <button id="botonEntrar" class="boton" type="submit">Entrar</button>
+    </form>
+  </section>
+
+  <div id="app" class="app oculto">
+    <header class="cabecera">
+      <h2 class="titulo">Sala</h2>
+      <span id="estado" class="etiqueta estado conectando">Conectando</span>
+      <span id="totalUsuarios" class="etiqueta"></span>
+      <span id="miNombre" class="yo"></span>
+    </header>
+
+    <main id="mensajes" class="mensajes">
+      <p class="vacio titulo">Sin mensajes</p>
+    </main>
+
+    <form id="formMensaje" class="formulario" autocomplete="off">
+      <input id="inputMensaje" class="campo" type="text" placeholder="Escribe" maxlength="500">
+      <button id="botonEnviar" class="boton" type="submit" disabled>Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    const TIPOS = {
+      ENTRAR: 'entrar',
+      MENSAJE: 'mensaje',
+      USUARIOS: 'usuarios',
+      SISTEMA: 'sistema',
+      HISTORIAL: 'historial',
+      ERROR: 'error'
+    };
+
+    const RETRASO_RECONEXION = 3000;
+    const URL_WS = `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}`;
+
+    const $ = (id) => document.getElementById(id);
+
+    const pantallaEntrada = $('pantallaEntrada');
+    const formEntrada = $('formEntrada');
+    const inputNombre = $('inputNombre');
+    const errorEntrada = $('errorEntrada');
+    const botonEntrar = $('botonEntrar');
+    const app = $('app');
+    const miNombre = $('miNombre');
+    const estado = $('estado');
+    const totalUsuarios = $('totalUsuarios');
+    const contenedorMensajes = $('mensajes');
+    const formMensaje = $('formMensaje');
+    const inputMensaje = $('inputMensaje');
+    const botonEnviar = $('botonEnviar');
+
+    let socket = null;
+    let nombre = '';
+    let registrado = false;
+    let reconectar = false;
+    let temporizador = null;
+
+    const formatearHora = (iso) =>
+      new Date(iso).toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
+
+    const esPropio = (usuario) => usuario.toLowerCase() === nombre.toLowerCase();
+
+    const ponerEstado = (clase, texto) => {
+      estado.className = `etiqueta estado ${clase}`;
+      estado.textContent = texto;
+    };
+
+    const actualizarBotonEnviar = () => {
+      botonEnviar.disabled = !registrado || !inputMensaje.value.trim();
+    };
+
+    const mostrarChat = () => {
+      pantallaEntrada.classList.add('oculto');
+      app.classList.remove('oculto');
+      miNombre.textContent = nombre;
+      inputMensaje.focus();
+    };
+
+    const mostrarEntrada = (error = '') => {
+      app.classList.add('oculto');
+      pantallaEntrada.classList.remove('oculto');
+      errorEntrada.textContent = error;
+      botonEntrar.disabled = false;
+      inputNombre.focus();
+    };
+
+    const estaAlFinal = () =>
+      contenedorMensajes.scrollHeight - contenedorMensajes.scrollTop - contenedorMensajes.clientHeight < 80;
+
+    const bajarAlFinal = () => {
+      contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
+    };
+
+    const quitarVacio = () => {
+      const vacio = contenedorMensajes.querySelector('.vacio');
+      if (vacio) vacio.remove();
+    };
+
+    const crearElementoMensaje = (mensaje) => {
+      const elemento = document.createElement('div');
+
+      if (mensaje.tipo === TIPOS.SISTEMA || mensaje.tipo === TIPOS.ERROR) {
+        elemento.className = `etiqueta aviso ${mensaje.tipo === TIPOS.ERROR ? 'fallo' : ''}`;
+        elemento.textContent = `${mensaje.texto}  ${formatearHora(mensaje.timestamp)}`;
+        return elemento;
+      }
+
+      const autorNombre = mensaje.usuario?.nombre ?? 'Anónimo';
+      elemento.className = `mensaje ${esPropio(autorNombre) ? 'propio' : ''}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'etiqueta meta';
+
+      const autor = document.createElement('span');
+      autor.textContent = esPropio(autorNombre) ? 'Tú' : autorNombre;
+
+      const hora = document.createElement('span');
+      hora.className = 'hora';
+      hora.textContent = formatearHora(mensaje.timestamp);
+
+      meta.append(autor, hora);
+      elemento.append(meta, mensaje.texto);
+      return elemento;
+    };
+
+    const agregarMensaje = (mensaje) => {
+      const debeBajar = estaAlFinal() || (mensaje.tipo === TIPOS.MENSAJE && esPropio(mensaje.usuario?.nombre ?? ''));
+      quitarVacio();
+      contenedorMensajes.append(crearElementoMensaje(mensaje));
+      if (debeBajar) bajarAlFinal();
+    };
+
+    const pintarHistorial = (mensajes) => {
+      contenedorMensajes.innerHTML = '';
+      if (!mensajes.length) {
+        contenedorMensajes.innerHTML = '<p class="vacio titulo">Sin mensajes</p>';
+        return;
+      }
+      const fragmento = document.createDocumentFragment();
+      mensajes.forEach((mensaje) => fragmento.append(crearElementoMensaje(mensaje)));
+      contenedorMensajes.append(fragmento);
+      bajarAlFinal();
+    };
+
+    const pintarUsuarios = (usuarios) => {
+      totalUsuarios.textContent = `${usuarios.length} en línea`;
+    };
+
+    const enviar = (objeto) => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(objeto));
+        return true;
+      }
+      return false;
+    };
+
+    const procesarMensaje = (evento) => {
+      let datos;
+      try {
+        datos = JSON.parse(evento.data);
+      } catch {
+        return;
+      }
+
+      switch (datos.tipo) {
+        case TIPOS.HISTORIAL:
+          registrado = true;
+          mostrarChat();
+          pintarHistorial(datos.mensajes || []);
+          actualizarBotonEnviar();
+          break;
+        case TIPOS.MENSAJE:
+        case TIPOS.SISTEMA:
+          agregarMensaje(datos);
+          break;
+        case TIPOS.USUARIOS:
+          pintarUsuarios(datos.usuarios || []);
+          break;
+        case TIPOS.ERROR:
+          if (!registrado) {
+            reconectar = false;
+            clearTimeout(temporizador);
+            socket.close();
+            mostrarEntrada(datos.texto);
+          } else {
+            agregarMensaje(datos);
+          }
+          break;
+      }
+    };
+
+    const conectar = () => {
+      clearTimeout(temporizador);
+      ponerEstado('conectando', 'Conectando');
+
+      socket = new WebSocket(URL_WS);
+
+      socket.addEventListener('open', () => {
+        ponerEstado('conectado', 'En línea');
+        enviar({ tipo: TIPOS.ENTRAR, nombre });
+      });
+
+      socket.addEventListener('message', procesarMensaje);
+
+      socket.addEventListener('close', () => {
+        registrado = false;
+        actualizarBotonEnviar();
+        ponerEstado('', 'Sin conexión');
+
+        if (!reconectar) return;
+
+        if (app.classList.contains('oculto')) {
+          mostrarEntrada('Servidor no disponible');
+        } else {
+          ponerEstado('conectando', 'Reconectando');
+        }
+        temporizador = setTimeout(conectar, RETRASO_RECONEXION);
+      });
+    };
+
+    formEntrada.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      const valor = inputNombre.value.trim().replace(/\s+/g, ' ');
+
+      if (valor.length < 2 || valor.length > 20) {
+        errorEntrada.textContent = '2 a 20 caracteres';
+        return;
+      }
+
+      nombre = valor;
+      errorEntrada.textContent = '';
+      botonEntrar.disabled = true;
+      reconectar = true;
+      conectar();
+    });
+
+    formMensaje.addEventListener('submit', (evento) => {
+      evento.preventDefault();
+      const texto = inputMensaje.value.trim();
+      if (!texto || !registrado) return;
+
+      if (enviar({ tipo: TIPOS.MENSAJE, texto })) {
+        inputMensaje.value = '';
+        actualizarBotonEnviar();
+      }
+      inputMensaje.focus();
+    });
+
+    inputMensaje.addEventListener('input', actualizarBotonEnviar);
+  </script>
+</body>
+</html>
